@@ -20,7 +20,7 @@
     --border-radius: 8px;
 }
 
-/* Dark Mode Palette */
+/* Dark Mode Palette (Still used by the new JS) */
 body.dark-mode {
     --color-primary: #4dabf7;
     --color-primary-hover: #a5d8ff;
@@ -48,7 +48,6 @@ body {
     color: var(--color-text);
     background-color: var(--color-bg);
     transition: background-color 0.3s, color 0.3s;
-    /* Improves font rendering */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -82,7 +81,6 @@ ul {
     margin-top: 0.5rem;
     color: var(--color-text-secondary);
 }
-/* Main bullet points inside cards */
 .card ul li {
     margin-bottom: 0.5rem;
 }
@@ -125,7 +123,6 @@ header {
 }
 
 /* === 4. LAYOUT & CONTENT CARDS === */
-/* Replaced .job with .card for a more generic name */
 .card {
     margin-bottom: 1.5rem;
     padding: 1.5rem;
@@ -149,7 +146,7 @@ header {
 }
 .card-company {
     font-weight: 600;
-    color: var(--color-text); /* Company name is more prominent */
+    color: var(--color-text); 
 }
 .card-title {
     font-size: 1.2rem;
@@ -158,7 +155,6 @@ header {
     margin-bottom: 0.5rem;
 }
 
-/* Specific styling for project links */
 .project-link {
     text-decoration: none;
     color: var(--color-text);
@@ -168,7 +164,7 @@ header {
     text-decoration: none;
 }
 .project-link .card-title::after {
-    content: ' →'; /* Adds a nice arrow to indicate a link */
+    content: ' →'; 
     transition: transform 0.2s ease;
     display: inline-block;
 }
@@ -186,72 +182,44 @@ header {
 .skills-category {
     width: 100%;
 }
-/* This is the magic for the skill tags */
 .skills-category ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem; /* Space between tags */
+    gap: 0.75rem; 
 }
 .skills-category li {
     background-color: var(--color-tag-bg);
     color: var(--color-tag-text);
     padding: 0.5rem 1rem;
-    border-radius: 20px; /* This makes it a "pill" */
+    border-radius: 20px; 
     font-size: 0.9rem;
     font-weight: 500;
-    margin-bottom: 0; /* Override default li margin */
+    margin-bottom: 0; 
 }
 
-/* === 6. DARK MODE TOGGLE === */
-.theme-switch-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2rem;
-    gap: 0.75rem;
+/* === 6. SCROLL ANIMATIONS (NEW) === */
+/*
+  This sets the "before" state of our animated elements.
+  They start invisible (opacity: 0) and slightly moved down.
+*/
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    /* This transition is what makes the fade-in smooth */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
-.theme-label {
-    font-size: 0.9rem;
-    color: var(--color-text-secondary);
+/*
+  The JavaScript will add this class when the element
+  scrolls into view, triggering the transition to this "after" state.
+*/
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
-.theme-switch {
-    display: inline-block;
-    height: 24px;
-    position: relative;
-    width: 50px;
-}
-.theme-switch input { display:none; }
-.slider {
-    background-color: #ccc;
-    bottom: 0;
-    cursor: pointer;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transition: .4s;
-}
-.slider:before {
-    background-color: #fff;
-    bottom: 4px;
-    content: "";
-    height: 16px;
-    left: 4px;
-    position: absolute;
-    transition: .4s;
-    width: 16px;
-}
-input:checked + .slider {
-    background-color: var(--color-primary);
-}
-input:checked + .slider:before {
-    transform: translateX(26px);
-}
-.slider.round { border-radius: 34px; }
-.slider.round:before { border-radius: 50%; }
+
 
 /* === 7. FOOTER & RESPONSIVE === */
 footer {
@@ -278,7 +246,6 @@ footer {
         flex-direction: column;
         gap: 4px;
     }
-    /* Hide the text separators on mobile */
     .contact-info li span[aria-hidden="true"] {
         display: none;
     }
