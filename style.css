@@ -1,0 +1,285 @@
+/* === 1. GLOBAL SETUP & CSS VARIABLES === */
+:root {
+    /* Color Palette (Light Mode) */
+    --color-primary: #007bff;
+    --color-primary-hover: #0056b3;
+    --color-bg: #f9f9f9;
+    --color-bg-card: #ffffff;
+    --color-text: #212529;
+    --color-text-secondary: #5a6169;
+    --color-border: #e9ecef;
+    --color-shadow: rgba(0, 0, 0, 0.05);
+    --color-tag-bg: #f1f3f5;
+    --color-tag-text: #343a40;
+    
+    /* Typography */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    
+    /* Sizing & Borders */
+    --max-width: 850px;
+    --border-radius: 8px;
+}
+
+/* Dark Mode Palette */
+body.dark-mode {
+    --color-primary: #4dabf7;
+    --color-primary-hover: #a5d8ff;
+    --color-bg: #121212;
+    --color-bg-card: #1e1e1e;
+    --color-text: #f1f1f1;
+    --color-text-secondary: #adb5bd;
+    --color-border: #333;
+    --color-shadow: rgba(0, 0, 0, 0.2);
+    --color-tag-bg: #343a40;
+    --color-tag-text: #e9ecef;
+}
+
+/* Basic Setup */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    margin: 0 auto;
+    padding: 2rem;
+    max-width: var(--max-width);
+    line-height: 1.6;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    transition: background-color 0.3s, color 0.3s;
+    /* Improves font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* === 2. TYPOGRAPHY & LINKS === */
+h1, h2, h3 {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+h1 {
+    margin-top: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+}
+h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 0.5rem;
+}
+h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+}
+
+ul {
+    padding-left: 20px;
+    margin-top: 0.5rem;
+    color: var(--color-text-secondary);
+}
+/* Main bullet points inside cards */
+.card ul li {
+    margin-bottom: 0.5rem;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+a:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+}
+
+/* === 3. HEADER & NAVIGATION === */
+header {
+    margin-bottom: 2rem;
+}
+.contact-info {
+    padding: 0;
+    margin-bottom: 0;
+}
+.contact-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    color: var(--color-text);
+}
+.contact-info li {
+    display: inline-block;
+}
+.contact-info li span[aria-hidden="true"] {
+    color: var(--color-text-secondary);
+    opacity: 0.5;
+}
+
+/* === 4. LAYOUT & CONTENT CARDS === */
+/* Replaced .job with .card for a more generic name */
+.card {
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    background-color: var(--color-bg-card);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px var(--color-shadow);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+.card-company {
+    font-weight: 600;
+    color: var(--color-text); /* Company name is more prominent */
+}
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+}
+
+/* Specific styling for project links */
+.project-link {
+    text-decoration: none;
+    color: var(--color-text);
+}
+.project-link:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+.project-link .card-title::after {
+    content: ' →'; /* Adds a nice arrow to indicate a link */
+    transition: transform 0.2s ease;
+    display: inline-block;
+}
+.project-link:hover .card-title::after {
+    transform: translateX(4px);
+}
+
+
+/* === 5. SKILLS SECTION (MODERN TAGS) === */
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+.skills-category {
+    width: 100%;
+}
+/* This is the magic for the skill tags */
+.skills-category ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem; /* Space between tags */
+}
+.skills-category li {
+    background-color: var(--color-tag-bg);
+    color: var(--color-tag-text);
+    padding: 0.5rem 1rem;
+    border-radius: 20px; /* This makes it a "pill" */
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0; /* Override default li margin */
+}
+
+/* === 6. DARK MODE TOGGLE === */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    gap: 0.75rem;
+}
+.theme-label {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+.theme-switch {
+    display: inline-block;
+    height: 24px;
+    position: relative;
+    width: 50px;
+}
+.theme-switch input { display:none; }
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+.slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 16px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 16px;
+}
+input:checked + .slider {
+    background-color: var(--color-primary);
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+.slider.round { border-radius: 34px; }
+.slider.round:before { border-radius: 50%; }
+
+/* === 7. FOOTER & RESPONSIVE === */
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 1rem;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+    .card-header {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    .contact-info ul {
+        flex-direction: column;
+        gap: 4px;
+    }
+    /* Hide the text separators on mobile */
+    .contact-info li span[aria-hidden="true"] {
+        display: none;
+    }
+}
