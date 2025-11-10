@@ -304,12 +304,15 @@ GitHub:   https://github.com/Shalijar`
                 // Other characters (unchanged)
                 else {
                     return char;
-                }
+.                }
             }).join('');
         }
 
         // --- Update Function ---
         function updateCrypto() {
+            // Ensure elements exist before using them
+            if (!input || !output || !slider || !shiftValue || !modeEncrypt) return;
+
             const text = input.value;
             const shift = parseInt(slider.value, 10);
             const mode = modeEncrypt.checked ? 'encrypt' : 'decrypt';
@@ -329,11 +332,12 @@ GitHub:   https://github.com/Shalijar`
         }
 
         // --- Event Listeners ---
-        // Run update() on ANY input change
-        input.addEventListener('input', updateCrypto);
-        slider.addEventListener('input', updateCrypto);
-        // Use 'change' for radio buttons
-        cryptoModule.querySelector('.crypto-mode').addEventListener('change', updateCrypto);
+        // Add safety checks for all listeners
+        input?.addEventListener('input', updateCrypto);
+        slider?.addEventListener('input', updateCrypto);
+        
+        const cryptoModeContainer = cryptoModule.querySelector('.crypto-mode');
+        cryptoModeContainer?.addEventListener('change', updateCrypto);
 
         // Initial run
         updateCrypto();

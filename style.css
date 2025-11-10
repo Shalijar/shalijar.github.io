@@ -123,6 +123,7 @@ header {
     opacity: 0.5;
 }
 
+/* Site Tools */
 .site-tools {
     position: absolute;
     top: 0;
@@ -253,7 +254,7 @@ header {
 }
 
 
-/* === 7. NEW: FILTERING HIDE STYLE === */
+/* === 7. FILTERING HIDE STYLE === */
 .card.is-hidden {
     opacity: 0;
     height: 0;
@@ -266,7 +267,7 @@ header {
 }
 
 
-/* === 8. NEW: TERMINAL STYLES === */
+/* === 8. TERMINAL STYLES === */
 .terminal-window {
     position: fixed;
     bottom: 0;
@@ -282,6 +283,7 @@ header {
     display: flex;
     flex-direction: column;
     
+    /* Hide by default */
     transform: translateY(100%);
     transition: transform 0.4s ease-in-out;
     z-index: 1000;
@@ -305,10 +307,10 @@ body.dark-mode .terminal-window {
     line-height: 1.4;
 }
 #terminal-output .terminal-command {
-    color: #888;
+    color: #888; /* Command echo color */
 }
 #terminal-output .terminal-response {
-    white-space: pre-wrap;
+    white-space: pre-wrap; /* Preserve formatting */
 }
 #terminal-output .terminal-error {
     color: #ff6b6b;
@@ -322,7 +324,7 @@ body.dark-mode .terminal-window {
     border-top: 1px solid #333;
 }
 .terminal-user {
-    color: #50fa7b;
+    color: #50fa7b; /* Green prompt */
     margin-right: 0.5rem;
     white-space: nowrap;
 }
@@ -337,7 +339,11 @@ body.dark-mode .terminal-window {
 }
 
 
-/* === 9. NEW: CRYPTO MODULE STYLES === */
+/* === 9. CRYPTO MODULE STYLES === */
+.advanced-module .card-title {
+    margin-bottom: 0.5rem;
+}
+
 .crypto-controls {
     display: flex;
     flex-wrap: wrap;
@@ -348,6 +354,7 @@ body.dark-mode .terminal-window {
     margin-bottom: 1rem;
 }
 
+/* Modern toggle switch for radio buttons */
 .crypto-mode {
     display: flex;
     background: var(--color-tag-bg);
@@ -399,6 +406,7 @@ input[type="range"] {
     gap: 1.5rem;
 }
 
+/* Text area styles */
 textarea.crypto-text {
     width: 100%;
     min-height: 120px;
@@ -421,6 +429,7 @@ textarea.crypto-text[readonly] {
     color: var(--color-text-secondary);
 }
 
+/* Responsive grid for crypto IO */
 @media (min-width: 700px) {
     .crypto-io {
         grid-template-columns: 1fr 1fr;
