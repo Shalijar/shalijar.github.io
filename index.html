@@ -24,19 +24,25 @@
                 <li><a href="https://github.com/Shalijar" target="_blank" rel="noopener noreferrer">GitHub</a></li>
             </ul>
         </nav>
+        
+        <nav class="site-tools">
+            <button id="terminal-toggle" title="Toggle Terminal (Ctrl + `)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+            </button>
+        </nav>
     </header>
 
     <main>
         <section id="education">
             <h2 class="reveal-on-scroll">Education</h2>
-            <div class="card reveal-on-scroll">
+            <div class="card reveal-on-scroll" data-tags="education">
                 <div class="card-header">
                     <span class="card-company">York University</span>
                     <span class="card-date">Sep. 2024-Present</span>
                 </div>
                 <div class="card-title">Bachelor of Arts in Computer Security</div>
             </div>
-            <div class="card reveal-on-scroll">
+            <div class="card reveal-on-scroll" data-tags="education">
                 <div class="card-header">
                     <span class="card-company">Carleton University</span>
                     <span class="card-date">Sep. 2023-May 2024</span>
@@ -47,7 +53,7 @@
 
         <section id="experience">
             <h2 class="reveal-on-scroll">Experience</h2>
-            <div class="card reveal-on-scroll">
+            <div class="card reveal-on-scroll" data-tags="c micropython data-science python">
                 <div class="card-header">
                     <span class="card-company">Cognitive Systems</span>
                     <span class="card-date">May 2025-Present</span>
@@ -59,7 +65,7 @@
                 </ul>
             </div>
 
-            <div class="card reveal-on-scroll">
+            <div class="card reveal-on-scroll" data-tags="iot security research">
                 <div class="card-header">
                     <span class="card-company">Carleton University - Carleton Internet Security Lab Volunteer</span>
                     <span class="card-date">Sep. 2023 - May 2024</span>
@@ -71,7 +77,7 @@
                 </ul>
             </div>
 
-            <div class="card reveal-on-scroll">
+            <div class="card reveal-on-scroll" data-tags="python security research xss idor">
                 <div class="card-header">
                     <span class="card-company">Carleton University - The Morrisseau Project</span>
                     <span class="card-date">Oct. 2023 - May 2024</span>
@@ -84,7 +90,7 @@
                 </ul>
             </div>
             
-            <div class="card reveal-on-scroll">
+            <div class="card reveal-on-scroll" data-tags="python data-science jupyter">
                 <div class="card-header">
                     <span class="card-company">Carleton University</span>
                     <span class="card-date">Oct. 2023-Dec. 2023</span>
@@ -97,7 +103,7 @@
                 </ul>
             </div>
 
-            <div class="card reveal-on-scroll">
+            <div class="card reveal-on-scroll" data-tags="devsecops kubernetes jenkins gitlab bash">
                 <div class="card-header">
                     <span class="card-company">Dotin (Core Banking)</span>
                     <span class="card-date">Jul. 2022-Dec. 2022</span>
@@ -115,7 +121,7 @@
 
         <section id="projects">
             <h2 class="reveal-on-scroll">Projects</h2>
-            <div class="card reveal-on-scroll">
+            <div class="card reveal-on-scroll" data-tags="python data-science">
                 <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">
                     <div class="card-title">Morrisseau Cleaner</div>
                 </a>
@@ -124,7 +130,7 @@
                     <li>Implemented robust data validation techniques, improving dataset accuracy and integrity</li>
                 </ul>
             </div>
-            <div class="card reveal-on-scroll">
+            <div class="card reveal-on-scroll" data-tags="python selenium automation">
                 <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">
                     <div class="card-title">Movati-Reserver</div>
                 </a>
@@ -137,34 +143,66 @@
 
         <section id="technical-skills">
             <h2 class="reveal-on-scroll">Technical Skills</h2>
+            <p class="reveal-on-scroll" style="color: var(--color-text-secondary); margin-top: -0.5rem;">Click a skill to filter projects and experience below.</p>
             <div class="skills-container reveal-on-scroll">
                 <div class="skills-category">
                     <h3>Programming Languages</h3>
                     <ul>
-                        <li>Python</li><li>C++</li><li>C</li><li>MicroPython</li><li>Rust</li><li>Java</li><li>Groovy</li><li>JavaScript</li><li>SQL</li>
+                        <li class="skill-tag">Python</li><li class="skill-tag">C++</li><li class="skill-tag">C</li><li class="skill-tag">MicroPython</li><li class="skill-tag">Rust</li><li class="skill-tag">Java</li><li class="skill-tag">Groovy</li><li class="skill-tag">JavaScript</li><li class="skill-tag">SQL</li>
                     </ul>
                 </div>
                 <div class="skills-category">
                     <h3>Technologies & Tools</h3>
                     <ul>
-                        <li>Docker</li><li>Kubernetes</li><li>Jenkins</li><li>Node.js</li><li>Nexus</li><li>Checkmarx</li><li>Burp Suite</li>
+                        <li class="skill-tag">Docker</li><li class="skill-tag">Kubernetes</li><li class="skill-tag">Jenkins</li><li class="skill-tag">Node.js</li><li class="skill-tag">Nexus</li><li class="skill-tag">Checkmarx</li><li class="skill-tag">Burp Suite</li><li class="skill-tag">GitLab</li><li class="skill-tag">Selenium</li>
                     </ul>
                 </div>
                 <div class="skills-category">
                     <h3>Development Practices</h3>
                     <ul>
-                        <li>Object-Oriented Design</li><li>Algorithm Design</li><li>Agile</li><li>SAST</li><li>DAST</li>
+                        <li class="skill-tag">Object-Oriented Design</li><li class="skill-tag">Algorithm Design</li><li class="skill-tag">Agile</li><li class="skill-tag">SAST</li><li class="skill-tag">DAST</li><li class="skill-tag">DevSecOps</li>
                     </ul>
                 </div>
                 <div class="skills-category">
                     <h3>Platforms & Systems</h3>
                     <ul>
-                        <li>Linux/Ubuntu</li><li>Virtualization</li>
+                        <li class="skill-tag">Linux/Ubuntu</li><li class="skill-tag">Virtualization</li><li class="skill-tag">Bash</li><li class="skill-tag">IoT</li>
                     </ul>
                 </div>
             </div>
         </section>
+        
+        <section id="advanced-modules">
+            <h2 class="reveal-on-scroll">Interactive Modules</h2>
+            
+            <div id="wasm-runner" class="card advanced-module reveal-on-scroll">
+                <h3>C in the Browser (WebAssembly)</h3>
+                <p>Run compiled C code directly in this module. (Coming Soon)</p>
+                </div>
+            
+            <div id="crypto-playground" class="card advanced-module reveal-on-scroll">
+                <h3>Cryptography Playground</h3>
+                <p>An interactive tool to visualize classic encryption algorithms. (Coming Soon)</p>
+                </div>
+
+            <div id="memory-visualizer" class="card advanced-module reveal-on-scroll">
+                <h3>Memory Allocation Visualizer</h3>
+                <p>A simulation of heap memory management (malloc/free). (Coming Soon)</p>
+                </div>
+        </section>
+
     </main>
+    
+    <div id="terminal" class="terminal-window">
+        <div id="terminal-output">
+            <div>Welcome to Ali Shajari's interactive terminal.</div>
+            <div>Type 'help' to see available commands.</div>
+        </div>
+        <div class="terminal-prompt">
+            <span class="terminal-user">guest@ali.dev:~$</span>
+            <input type="text" id="terminal-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        </div>
+    </div>
 
     <footer>
         <p>&copy; 2025 Ali Shajari. All rights reserved.</p>

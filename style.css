@@ -20,7 +20,7 @@
     --border-radius: 8px;
 }
 
-/* Dark Mode Palette (Still used by the new JS) */
+/* Dark Mode Palette */
 body.dark-mode {
     --color-primary: #4dabf7;
     --color-primary-hover: #a5d8ff;
@@ -98,6 +98,7 @@ a:hover {
 /* === 3. HEADER & NAVIGATION === */
 header {
     margin-bottom: 2rem;
+    position: relative; /* For tool positioning */
 }
 .contact-info {
     padding: 0;
@@ -122,6 +123,34 @@ header {
     opacity: 0.5;
 }
 
+/* NEW: Site Tools */
+.site-tools {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#terminal-toggle {
+    background: none;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+#terminal-toggle:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+#terminal-toggle.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+}
+#terminal-toggle.active svg {
+    stroke: #fff;
+}
+
+
 /* === 4. LAYOUT & CONTENT CARDS === */
 .card {
     margin-bottom: 1.5rem;
@@ -129,7 +158,9 @@ header {
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
     background-color: var(--color-bg-card);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.4s ease,
+                height 0.4s ease, padding 0.4s ease, margin 0.4s ease;
+    overflow: hidden; /* For filtering animation */
 }
 .card:hover {
     transform: translateY(-5px);
@@ -173,7 +204,7 @@ header {
 }
 
 
-/* === 5. SKILLS SECTION (MODERN TAGS) === */
+/* === 5. SKILLS SECTION (MODIFIED FOR FILTERING) === */
 .skills-container {
     display: flex;
     flex-wrap: wrap;
@@ -198,30 +229,130 @@ header {
     font-size: 0.9rem;
     font-weight: 500;
     margin-bottom: 0; 
+    /* NEW: Filtering styles */
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+.skills-category li:hover {
+    background-color: var(--color-border);
+}
+.skills-category li.active {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    font-weight: 600;
 }
 
-/* === 6. SCROLL ANIMATIONS (NEW) === */
-/*
-  This sets the "before" state of our animated elements.
-  They start invisible (opacity: 0) and slightly moved down.
-*/
+
+/* === 6. SCROLL ANIMATIONS === */
 .reveal-on-scroll {
     opacity: 0;
     transform: translateY(20px);
-    /* This transition is what makes the fade-in smooth */
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
-/*
-  The JavaScript will add this class when the element
-  scrolls into view, triggering the transition to this "after" state.
-*/
 .reveal-on-scroll.is-visible {
     opacity: 1;
     transform: translateY(0);
 }
 
 
-/* === 7. FOOTER & RESPONSIVE === */
+/* === 7. NEW: FILTERING HIDE STYLE === */
+.card.is-hidden {
+    opacity: 0;
+    height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    border: 0;
+    pointer-events: none;
+}
+
+
+/* === 8. NEW: TERMINAL STYLES === */
+.terminal-window {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 350px;
+    background-color: #1a1a1a;
+    border-top: 2px solid var(--color-border);
+    color: #f1f1f1;
+    font-family: 'Menlo', 'Courier New', monospace;
+    font-size: 0.9rem;
+    
+    display: flex;
+    flex-direction: column;
+    
+    /* Hide by default */
+    transform: translateY(100%);
+    transition: transform 0.4s ease-in-out;
+    z-index: 1000;
+}
+.terminal-window.is-open {
+    transform: translateY(0);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
+}
+body.dark-mode .terminal-window {
+    background-color: #0d0d0d;
+    border-top: 2px solid #333;
+}
+
+#terminal-output {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1rem;
+}
+#terminal-output > div {
+    margin-bottom: 0.25rem;
+    line-height: 1.4;
+}
+#terminal-output .terminal-command {
+    color: #888; /* Command echo color */
+}
+#terminal-output .terminal-response {
+    white-space: pre-wrap; /* Preserve formatting */
+}
+#terminal-output .terminal-error {
+    color: #ff6b6b;
+}
+
+
+.terminal-prompt {
+    display: flex;
+    padding: 0.5rem 1rem;
+    background-color: #2b2b2b;
+    border-top: 1px solid #333;
+}
+.terminal-user {
+    color: #50fa7b; /* Green prompt */
+    margin-right: 0.5rem;
+    white-space: nowrap;
+}
+#terminal-input {
+    flex-grow: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: #f1f1f1;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+
+/* === 9. NEW: ADVANCED MODULE PLACEHOLDER === */
+.advanced-module {
+    /* Just a placeholder style */
+    border-style: dashed;
+    background-color: var(--color-bg);
+}
+.advanced-module p {
+    color: var(--color-text-secondary);
+    font-style: italic;
+}
+
+
+/* === 10. FOOTER & RESPONSIVE === */
 footer {
     text-align: center;
     margin-top: 3rem;
@@ -248,5 +379,13 @@ footer {
     }
     .contact-info li span[aria-hidden="true"] {
         display: none;
+    }
+    .site-tools {
+        position: static;
+        text-align: center;
+        margin-top: 1rem;
+    }
+    .terminal-window {
+        height: 300px;
     }
 }
