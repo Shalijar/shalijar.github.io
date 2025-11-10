@@ -33,36 +33,32 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const filterableCards = document.querySelectorAll('.card[data-tags]');
     let activeFilters = [];
 
-    skillsContainer.addEventListener('click', (e) => {
-        if (e.target.classList.contains('skill-tag')) {
-            const tag = e.target;
-            const filter = tag.textContent.toLowerCase();
+    if (skillsContainer && filterableCards.length > 0) {
+        skillsContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('skill-tag')) {
+                const tag = e.target;
+                const filter = tag.textContent.toLowerCase();
 
-            // Toggle the filter in the activeFilters array
-            tag.classList.toggle('active');
-            if (activeFilters.includes(filter)) {
-                activeFilters = activeFilters.filter(f => f !== filter);
-            } else {
-                activeFilters.push(filter);
+                tag.classList.toggle('active');
+                if (activeFilters.includes(filter)) {
+                    activeFilters = activeFilters.filter(f => f !== filter);
+                } else {
+                    activeFilters.push(filter);
+                }
+                
+                runFilter();
             }
-            
-            runFilter();
-        }
-    });
+        });
+    }
 
     function runFilter() {
         filterableCards.forEach(card => {
             const cardTags = card.dataset.tags.split(' ');
-            
-            // If no filters are active, show all cards
             if (activeFilters.length === 0) {
                 card.classList.remove('is-hidden');
                 return;
             }
-
-            // Check if every active filter is present in the card's tags
             const matches = activeFilters.every(filter => cardTags.includes(filter));
-
             if (matches) {
                 card.classList.remove('is-hidden');
             } else {
@@ -74,93 +70,84 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     /* === FEATURE 4: INTERACTIVE TERMINAL (NEW) === */
     const terminal = document.getElementById('terminal');
-    const terminalToggle = document.getElementById('terminal-toggle');
-    const terminalOutput = document.getElementById('terminal-output');
-    const terminalInput = document.getElementById('terminal-input');
-    const terminalInputLine = terminalInput.parentElement;
+    if (terminal) {
+        const terminalToggle = document.getElementById('terminal-toggle');
+        const terminalOutput = document.getElementById('terminal-output');
+        const terminalInput = document.getElementById('terminal-input');
+        
+        const terminalHistory = [];
+        let historyIndex = -1;
 
-    const terminalHistory = [];
-    let historyIndex = -1;
-
-    // --- Terminal Toggle ---
-    function toggleTerminal(forceOpen = false) {
-        if (forceOpen) {
-            terminal.classList.add('is-open');
-            terminalToggle.classList.add('active');
-            terminalInput.focus();
-        } else {
-            const isOpen = terminal.classList.toggle('is-open');
-            terminalToggle.classList.toggle('active', isOpen);
-            if (isOpen) {
+        function toggleTerminal(forceOpen = false) {
+            if (forceOpen) {
+                terminal.classList.add('is-open');
+                terminalToggle.classList.add('active');
                 terminalInput.focus();
+            } else {
+                const isOpen = terminal.classList.toggle('is-open');
+                terminalToggle.classList.toggle('active', isOpen);
+                if (isOpen) {
+                    terminalInput.focus();
+                }
             }
         }
-    }
 
-    terminalToggle.addEventListener('click', () => toggleTerminal());
-    
-    // Global key listener for Ctrl + `
-    document.addEventListener('keydown', (e) => {
-        if (e.ctrlKey && e.key === '`') {
-            e.preventDefault();
-            toggleTerminal();
-        }
-    });
-
-    // --- Terminal Input Handling ---
-    terminalInput.addEventListener('keydown', (e) => {
-        switch (e.key) {
-            case 'Enter':
-                const commandText = terminalInput.value.trim();
-                if (commandText) {
-                    // Echo command
-                    printToTerminal(`> ${commandText}`, 'terminal-command');
-                    
-                    // Save to history
-                    terminalHistory.unshift(commandText);
-                    historyIndex = -1; // Reset history index
-
-                    parseCommand(commandText);
-                }
-                terminalInput.value = '';
-                break;
-            
-            case 'ArrowUp':
+        terminalToggle.addEventListener('click', () => toggleTerminal());
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === '`') {
                 e.preventDefault();
-                if (historyIndex < terminalHistory.length - 1) {
-                    historyIndex++;
-                    terminalInput.value = terminalHistory[historyIndex];
-                    terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
-                }
-                break;
+                toggleTerminal();
+            }
+        });
 
-            case 'ArrowDown':
-                e.preventDefault();
-                if (historyIndex > 0) {
-                    historyIndex--;
-                    terminalInput.value = terminalHistory[historyIndex];
-                } else {
-                    historyIndex = -1;
+        terminalInput.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'Enter':
+                    const commandText = terminalInput.value.trim();
+                    if (commandText) {
+                        printToTerminal(`> ${commandText}`, 'terminal-command');
+                        terminalHistory.unshift(commandText);
+                        historyIndex = -1;
+                        parseCommand(commandText);
+                    }
                     terminalInput.value = '';
-                }
-                break;
-        }
-    });
+                    break;
+                
+                case 'ArrowUp':
+                    e.preventDefault();
+                    if (historyIndex < terminalHistory.length - 1) {
+                        historyIndex++;
+                        terminalInput.value = terminalHistory[historyIndex];
+                        terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
+                    }
+                    break;
 
-    // Click on terminal focuses input
-    terminal.addEventListener('click', () => {
-        terminalInput.focus();
-    });
+                case 'ArrowDown':
+                    e.preventDefault();
+                    if (historyIndex > 0) {
+                        historyIndex--;
+                        terminalInput.value = terminalHistory[historyIndex];
+                    } else {
+                        historyIndex = -1;
+                        terminalInput.value = '';
+                    }
+                    break;
+            }
+        });
 
-    // --- Command Parser ---
-    function parseCommand(command) {
-        const parts = command.toLowerCase().split(' ');
-        const cmd = parts[0];
-        const args = parts.slice(1);
+        terminal.addEventListener('click', () => {
+            terminalInput.focus();
+        });
 
-        switch (cmd) {
-            case 'help':
-                printToTerminal(
+        function parseCommand(command) {
+            const parts = command.toLowerCase().split(' ');
+            const cmd = parts[0];
+            const args = parts.slice(1);
+
+            switch (cmd) {
+                case 'help':
+                    printToTerminal(
 `Available commands:
   help          - Shows this help message
   ls            - Lists portfolio sections
@@ -169,60 +156,52 @@ document.addEventListener('DOMContentLoaded', (event) => {
   social        - Lists social media links
   skills        - Lists all technical skills
   clear         - Clears the terminal output`
-                );
-                break;
-            
-            case 'ls':
-                printToTerminal('education/\nexperience/\nprojects/\nskills/');
-                break;
-            
-            case 'cat':
-                handleCatCommand(args.join(' '));
-                break;
-                
-            case 'contact':
-                printToTerminal('ali0shajari@gmail.com');
-                break;
-
-            case 'social':
-                printToTerminal(
+                    );
+                    break;
+                case 'ls':
+                    printToTerminal('education/\nexperience/\nprojects/\nskills/');
+                    break;
+                case 'cat':
+                    handleCatCommand(args.join(' '));
+                    break;
+                case 'contact':
+                    printToTerminal('ali0shajari@gmail.com');
+                    break;
+                case 'social':
+                    printToTerminal(
 `LinkedIn: https://www.linkedin.com/in/ali-shajari
 GitHub:   https://github.com/Shalijar`
-                );
-                break;
-
-            case 'skills':
-                const skills = Array.from(document.querySelectorAll('.skill-tag')).map(s => s.textContent).join(', ');
-                printToTerminal(skills);
-                break;
-
-            case 'clear':
-                terminalOutput.innerHTML = '';
-                break;
-
-            default:
-                printToTerminal(`bash: command not found: ${command}`, 'terminal-error');
+                    );
+                    break;
+                case 'skills':
+                    const skills = Array.from(document.querySelectorAll('.skill-tag')).map(s => s.textContent).join(', ');
+                    printToTerminal(skills);
+                    break;
+                case 'clear':
+                    terminalOutput.innerHTML = '';
+                    break;
+                default:
+                    printToTerminal(`bash: command not found: ${command}`, 'terminal-error');
+            }
         }
-    }
 
-    function handleCatCommand(path) {
-        if (!path) {
-            printToTerminal('cat: missing operand', 'terminal-error');
-            return;
-        }
-        
-        let content = '';
-        switch(path) {
-            case 'experience/cognitive':
-                content = 
+        function handleCatCommand(path) {
+            if (!path) {
+                printToTerminal('cat: missing operand', 'terminal-error');
+                return;
+            }
+            let content = '';
+            switch(path) {
+                case 'experience/cognitive':
+                    content = 
 `[Company] Cognitive Systems
 [Role]    Data Science Co-op (May 2025-Present)
 [Tasks]
 - Programmed microboards using C and MicroPython.
 - Developed comprehensive test suites for microboard firmware.`;
-                break;
-            case 'experience/dotin':
-                content =
+                    break;
+                case 'experience/dotin':
+                    content =
 `[Company] Dotin (Core Banking)
 [Role]    DevSecOps Intern (Jul 2022-Dec 2022)
 [Tasks]
@@ -230,34 +209,99 @@ GitHub:   https://github.com/Shalijar`
 - Architected secure Nexus artifact repository.
 - Developed Jenkins multibranch pipelines.
 - Streamlined GitLab operations and automated with Bash.`;
-                break;
-            case 'projects/morrisseau-cleaner':
-                content =
+                    break;
+                case 'projects/morrisseau-cleaner':
+                    content =
 `[Project] Morrisseau Cleaner
 [Link]    # (Add link)
 [Tasks]
 - Developed a Python library for automated data cleaning.
 - Implemented robust data validation, improving dataset accuracy.`;
-                break;
-            default:
-                content = `cat: ${path}: No such file or directory`;
-                printToTerminal(content, 'terminal-error');
-                return;
+                    break;
+                default:
+                    content = `cat: ${path}: No such file or directory`;
+                    printToTerminal(content, 'terminal-error');
+                    return;
+            }
+            printToTerminal(content);
         }
-        printToTerminal(content);
-    }
 
-    // --- Terminal Print Helper ---
-    function printToTerminal(text, className = 'terminal-response') {
-        const div = document.createElement('div');
-        div.textContent = text;
-        div.className = className;
-        terminalOutput.appendChild(div);
-        // Auto-scroll to bottom
-        terminalOutput.scrollTop = terminalOutput.scrollHeight;
-    }
+        function printToTerminal(text, className = 'terminal-response') {
+            const div = document.createElement('div');
+            div.textContent = text;
+            div.className = className;
+            terminalOutput.appendChild(div);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+    } // End if(terminal)
 
-    // Focus input on load
-    terminalInput.focus();
+
+    /* === FEATURE 5: CRYPTOGRAPHY PLAYGROUND (NEW) === */
+    const cryptoModule = document.getElementById('crypto-playground');
+    if (cryptoModule) {
+        const input = document.getElementById('crypto-input');
+        const output = document.getElementById('crypto-output');
+        const slider = document.getElementById('crypto-shift-slider');
+        const shiftValue = document.getElementById('crypto-shift-value');
+        const modeEncrypt = document.getElementById('crypto-mode-encrypt');
+        
+        // --- Main Cipher Function ---
+        function caesarCipher(text, shift, mode) {
+            if (mode === 'decrypt') {
+                shift = -shift;
+            }
+
+            return text.split('').map(char => {
+                const code = char.charCodeAt(0);
+
+                // Uppercase letters
+                if (code >= 65 && code <= 90) {
+                    let shiftedCode = ((code - 65 + shift) % 26);
+                    if (shiftedCode < 0) shiftedCode += 26; // Handle negative shift
+                    return String.fromCharCode(shiftedCode + 65);
+                }
+                // Lowercase letters
+                else if (code >= 97 && code <= 122) {
+                    let shiftedCode = ((code - 97 + shift) % 26);
+                    if (shiftedCode < 0) shiftedCode += 26; // Handle negative shift
+                    return String.fromCharCode(shiftedCode + 97);
+                }
+                // Other characters (unchanged)
+                else {
+                    return char;
+                }
+            }).join('');
+        }
+
+        // --- Update Function ---
+        function updateCrypto() {
+            const text = input.value;
+            const shift = parseInt(slider.value, 10);
+            const mode = modeEncrypt.checked ? 'encrypt' : 'decrypt';
+            
+            // Update labels
+            shiftValue.textContent = shift;
+            if (mode === 'encrypt') {
+                input.previousElementSibling.textContent = 'Input (Plaintext)';
+                output.previousElementSibling.textContent = 'Output (Ciphertext)';
+            } else {
+                input.previousElementSibling.textContent = 'Input (Ciphertext)';
+                output.previousElementSibling.textContent = 'Output (Plaintext)';
+            }
+
+            // Run cipher
+            output.value = caesarCipher(text, shift, mode);
+        }
+
+        // --- Event Listeners ---
+        // Run update() on ANY input change
+        input.addEventListener('input', updateCrypto);
+        slider.addEventListener('input', updateCrypto);
+        // Use 'change' for radio buttons
+        cryptoModule.querySelector('.crypto-mode').addEventListener('change', updateCrypto);
+
+        // Initial run
+        updateCrypto();
+    }
 
 });

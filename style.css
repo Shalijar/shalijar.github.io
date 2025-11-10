@@ -123,7 +123,6 @@ header {
     opacity: 0.5;
 }
 
-/* NEW: Site Tools */
 .site-tools {
     position: absolute;
     top: 0;
@@ -229,7 +228,6 @@ header {
     font-size: 0.9rem;
     font-weight: 500;
     margin-bottom: 0; 
-    /* NEW: Filtering styles */
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
 }
@@ -284,7 +282,6 @@ header {
     display: flex;
     flex-direction: column;
     
-    /* Hide by default */
     transform: translateY(100%);
     transition: transform 0.4s ease-in-out;
     z-index: 1000;
@@ -308,10 +305,10 @@ body.dark-mode .terminal-window {
     line-height: 1.4;
 }
 #terminal-output .terminal-command {
-    color: #888; /* Command echo color */
+    color: #888;
 }
 #terminal-output .terminal-response {
-    white-space: pre-wrap; /* Preserve formatting */
+    white-space: pre-wrap;
 }
 #terminal-output .terminal-error {
     color: #ff6b6b;
@@ -325,7 +322,7 @@ body.dark-mode .terminal-window {
     border-top: 1px solid #333;
 }
 .terminal-user {
-    color: #50fa7b; /* Green prompt */
+    color: #50fa7b;
     margin-right: 0.5rem;
     white-space: nowrap;
 }
@@ -340,15 +337,94 @@ body.dark-mode .terminal-window {
 }
 
 
-/* === 9. NEW: ADVANCED MODULE PLACEHOLDER === */
-.advanced-module {
-    /* Just a placeholder style */
-    border-style: dashed;
-    background-color: var(--color-bg);
+/* === 9. NEW: CRYPTO MODULE STYLES === */
+.crypto-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
 }
-.advanced-module p {
+
+.crypto-mode {
+    display: flex;
+    background: var(--color-tag-bg);
+    border-radius: var(--border-radius);
+    padding: 5px;
+}
+.crypto-mode input[type="radio"] {
+    display: none; /* Hide the actual radio button */
+}
+.crypto-mode label {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
     color: var(--color-text-secondary);
-    font-style: italic;
+}
+.crypto-mode input[type="radio"]:checked + label {
+    background-color: var(--color-bg-card);
+    color: var(--color-text);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.crypto-shift {
+    flex-grow: 1;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.crypto-shift label {
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+.crypto-shift span {
+    font-weight: 600;
+    color: var(--color-text);
+    min-width: 20px;
+    display: inline-block;
+    text-align: right;
+}
+input[type="range"] {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.crypto-io {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+textarea.crypto-text {
+    width: 100%;
+    min-height: 120px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    font-family: var(--font-family);
+    font-size: 1rem;
+    line-height: 1.6;
+    background: var(--color-bg);
+    color: var(--color-text);
+    resize: vertical;
+}
+textarea.crypto-text:focus {
+    outline: 2px solid var(--color-primary);
+    border-color: var(--color-primary);
+}
+textarea.crypto-text[readonly] {
+    background-color: var(--color-tag-bg);
+    color: var(--color-text-secondary);
+}
+
+@media (min-width: 700px) {
+    .crypto-io {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 
@@ -387,5 +463,9 @@ footer {
     }
     .terminal-window {
         height: 300px;
+    }
+    .crypto-controls {
+        flex-direction: column;
+        align-items: stretch;
     }
 }

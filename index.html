@@ -1,214 +1,263 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ali Shajari - Portfolio</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+document.addEventListener('DOMContentLoaded', (event) => {
 
-    <header>
-        <h1>Ali Shajari</h1>
-        <nav class="contact-info">
-            <ul>
-                <li><a href="mailto:ali0shajari@gmail.com">ali0shajari@gmail.com</a></li>
-                <li><span aria-hidden="true">|</span></li>
-                <li><a href="https://www.linkedin.com/in/ali-shajari" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-                <li><span aria-hidden="true">|</span></li>
-                <li><a href="https://github.com/Shalijar" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-            </ul>
-        </nav>
+    /* === FEATURE 1: AUTOMATIC SYSTEM THEME DETECTION === */
+    const applyTheme = () => {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+    };
+    applyTheme();
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+
+
+    /* === FEATURE 2: SCROLL-REVEAL ANIMATIONS === */
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    const elementsToReveal = document.querySelectorAll('.reveal-on-scroll');
+    elementsToReveal.forEach(element => {
+        observer.observe(element);
+    });
+
+    
+    /* === FEATURE 3: DYNAMIC SKILL FILTERING (NEW) === */
+    const skillsContainer = document.querySelector('.skills-container');
+    const filterableCards = document.querySelectorAll('.card[data-tags]');
+    let activeFilters = [];
+
+    skillsContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('skill-tag')) {
+            const tag = e.target;
+            const filter = tag.textContent.toLowerCase();
+
+            // Toggle the filter in the activeFilters array
+            tag.classList.toggle('active');
+            if (activeFilters.includes(filter)) {
+                activeFilters = activeFilters.filter(f => f !== filter);
+            } else {
+                activeFilters.push(filter);
+            }
+            
+            runFilter();
+        }
+    });
+
+    function runFilter() {
+        filterableCards.forEach(card => {
+            const cardTags = card.dataset.tags.split(' ');
+            
+            // If no filters are active, show all cards
+            if (activeFilters.length === 0) {
+                card.classList.remove('is-hidden');
+                return;
+            }
+
+            // Check if every active filter is present in the card's tags
+            const matches = activeFilters.every(filter => cardTags.includes(filter));
+
+            if (matches) {
+                card.classList.remove('is-hidden');
+            } else {
+                card.classList.add('is-hidden');
+            }
+        });
+    }
+
+
+    /* === FEATURE 4: INTERACTIVE TERMINAL (NEW) === */
+    const terminal = document.getElementById('terminal');
+    const terminalToggle = document.getElementById('terminal-toggle');
+    const terminalOutput = document.getElementById('terminal-output');
+    const terminalInput = document.getElementById('terminal-input');
+    const terminalInputLine = terminalInput.parentElement;
+
+    const terminalHistory = [];
+    let historyIndex = -1;
+
+    // --- Terminal Toggle ---
+    function toggleTerminal(forceOpen = false) {
+        if (forceOpen) {
+            terminal.classList.add('is-open');
+            terminalToggle.classList.add('active');
+            terminalInput.focus();
+        } else {
+            const isOpen = terminal.classList.toggle('is-open');
+            terminalToggle.classList.toggle('active', isOpen);
+            if (isOpen) {
+                terminalInput.focus();
+            }
+        }
+    }
+
+    terminalToggle.addEventListener('click', () => toggleTerminal());
+    
+    // Global key listener for Ctrl + `
+    document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.key === '`') {
+            e.preventDefault();
+            toggleTerminal();
+        }
+    });
+
+    // --- Terminal Input Handling ---
+    terminalInput.addEventListener('keydown', (e) => {
+        switch (e.key) {
+            case 'Enter':
+                const commandText = terminalInput.value.trim();
+                if (commandText) {
+                    // Echo command
+                    printToTerminal(`> ${commandText}`, 'terminal-command');
+                    
+                    // Save to history
+                    terminalHistory.unshift(commandText);
+                    historyIndex = -1; // Reset history index
+
+                    parseCommand(commandText);
+                }
+                terminalInput.value = '';
+                break;
+            
+            case 'ArrowUp':
+                e.preventDefault();
+                if (historyIndex < terminalHistory.length - 1) {
+                    historyIndex++;
+                    terminalInput.value = terminalHistory[historyIndex];
+                    terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
+                }
+                break;
+
+            case 'ArrowDown':
+                e.preventDefault();
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    terminalInput.value = terminalHistory[historyIndex];
+                } else {
+                    historyIndex = -1;
+                    terminalInput.value = '';
+                }
+                break;
+        }
+    });
+
+    // Click on terminal focuses input
+    terminal.addEventListener('click', () => {
+        terminalInput.focus();
+    });
+
+    // --- Command Parser ---
+    function parseCommand(command) {
+        const parts = command.toLowerCase().split(' ');
+        const cmd = parts[0];
+        const args = parts.slice(1);
+
+        switch (cmd) {
+            case 'help':
+                printToTerminal(
+`Available commands:
+  help          - Shows this help message
+  ls            - Lists portfolio sections
+  cat [section] - Shows details about a section (e.g., 'cat experience/cognitive')
+  contact       - Displays contact information
+  social        - Lists social media links
+  skills        - Lists all technical skills
+  clear         - Clears the terminal output`
+                );
+                break;
+            
+            case 'ls':
+                printToTerminal('education/\nexperience/\nprojects/\nskills/');
+                break;
+            
+            case 'cat':
+                handleCatCommand(args.join(' '));
+                break;
+                
+            case 'contact':
+                printToTerminal('ali0shajari@gmail.com');
+                break;
+
+            case 'social':
+                printToTerminal(
+`LinkedIn: https://www.linkedin.com/in/ali-shajari
+GitHub:   https://github.com/Shalijar`
+                );
+                break;
+
+            case 'skills':
+                const skills = Array.from(document.querySelectorAll('.skill-tag')).map(s => s.textContent).join(', ');
+                printToTerminal(skills);
+                break;
+
+            case 'clear':
+                terminalOutput.innerHTML = '';
+                break;
+
+            default:
+                printToTerminal(`bash: command not found: ${command}`, 'terminal-error');
+        }
+    }
+
+    function handleCatCommand(path) {
+        if (!path) {
+            printToTerminal('cat: missing operand', 'terminal-error');
+            return;
+        }
         
-        <nav class="site-tools">
-            <button id="terminal-toggle" title="Toggle Terminal (Ctrl + `)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
-            </button>
-        </nav>
-    </header>
+        let content = '';
+        switch(path) {
+            case 'experience/cognitive':
+                content = 
+`[Company] Cognitive Systems
+[Role]    Data Science Co-op (May 2025-Present)
+[Tasks]
+- Programmed microboards using C and MicroPython.
+- Developed comprehensive test suites for microboard firmware.`;
+                break;
+            case 'experience/dotin':
+                content =
+`[Company] Dotin (Core Banking)
+[Role]    DevSecOps Intern (Jul 2022-Dec 2022)
+[Tasks]
+- Implemented high-availability Kubernetes cluster.
+- Architected secure Nexus artifact repository.
+- Developed Jenkins multibranch pipelines.
+- Streamlined GitLab operations and automated with Bash.`;
+                break;
+            case 'projects/morrisseau-cleaner':
+                content =
+`[Project] Morrisseau Cleaner
+[Link]    # (Add link)
+[Tasks]
+- Developed a Python library for automated data cleaning.
+- Implemented robust data validation, improving dataset accuracy.`;
+                break;
+            default:
+                content = `cat: ${path}: No such file or directory`;
+                printToTerminal(content, 'terminal-error');
+                return;
+        }
+        printToTerminal(content);
+    }
 
-    <main>
-        <section id="education">
-            <h2 class="reveal-on-scroll">Education</h2>
-            <div class="card reveal-on-scroll" data-tags="education">
-                <div class="card-header">
-                    <span class="card-company">York University</span>
-                    <span class="card-date">Sep. 2024-Present</span>
-                </div>
-                <div class="card-title">Bachelor of Arts in Computer Security</div>
-            </div>
-            <div class="card reveal-on-scroll" data-tags="education">
-                <div class="card-header">
-                    <span class="card-company">Carleton University</span>
-                    <span class="card-date">Sep. 2023-May 2024</span>
-                </div>
-                <div class="card-title">Bachelor of Science in Computer Science</div>
-            </div>
-        </section>
+    // --- Terminal Print Helper ---
+    function printToTerminal(text, className = 'terminal-response') {
+        const div = document.createElement('div');
+        div.textContent = text;
+        div.className = className;
+        terminalOutput.appendChild(div);
+        // Auto-scroll to bottom
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+    }
 
-        <section id="experience">
-            <h2 class="reveal-on-scroll">Experience</h2>
-            <div class="card reveal-on-scroll" data-tags="c micropython data-science python">
-                <div class="card-header">
-                    <span class="card-company">Cognitive Systems</span>
-                    <span class="card-date">May 2025-Present</span>
-                </div>
-                <div class="card-title">Data Science Co-op</div>
-                <ul>
-                    <li>Programmed microboards using C and MicroPython, creating efficient and reliable firmware for data collection and processing</li>
-                    <li>Developed comprehensive test suites for microboard firmware, ensuring functionality and robustness under various operational conditions</li>
-                </ul>
-            </div>
+    // Focus input on load
+    terminalInput.focus();
 
-            <div class="card reveal-on-scroll" data-tags="iot security research">
-                <div class="card-header">
-                    <span class="card-company">Carleton University - Carleton Internet Security Lab Volunteer</span>
-                    <span class="card-date">Sep. 2023 - May 2024</span>
-                </div>
-                <div class="card-title">Research Assistant</div>
-                <ul>
-                    <li>Researched IoT longevity and its security implications under Professor David Barrera, focusing on identifying potential vulnerabilities in long-term deployments</li>
-                    <li>Implemented a universal access policy for home-based IoT devices, increasing security while eliminating the need for additional hardware resources</li>
-                </ul>
-            </div>
-
-            <div class="card reveal-on-scroll" data-tags="python security research xss idor">
-                <div class="card-header">
-                    <span class="card-company">Carleton University - The Morrisseau Project</span>
-                    <span class="card-date">Oct. 2023 - May 2024</span>
-                </div>
-                <div class="card-title">Research Assistant</div>
-                <ul>
-                    <li>Developed an automation script to clean and format data, reducing the time spent on this process from 1 year to 3 months</li>
-                    <li>Led a comprehensive software review to identify and address security vulnerabilities, including XSS, IDOR, and unauthorized access</li>
-                    <li>Assisted in maintaining project infrastructure and documentation</li>
-                </ul>
-            </div>
-            
-            <div class="card reveal-on-scroll" data-tags="python data-science jupyter">
-                <div class="card-header">
-                    <span class="card-company">Carleton University</span>
-                    <span class="card-date">Oct. 2023-Dec. 2023</span>
-                </div>
-                <div class="card-title">Student as Partners Program</div>
-                <ul>
-                    <li>Created an interactive and educational Jupyter notebook for 4th-year data science students</li>
-                    <li>Designed custom datasets tailored to practical scenarios for data cleaning, integration, visualization, and analysis</li>
-                    <li>Developed practice exercises and projects to reinforce key skills</li>
-                </ul>
-            </div>
-
-            <div class="card reveal-on-scroll" data-tags="devsecops kubernetes jenkins gitlab bash">
-                <div class="card-header">
-                    <span class="card-company">Dotin (Core Banking)</span>
-                    <span class="card-date">Jul. 2022-Dec. 2022</span>
-                </div>
-                <div class="card-title">DevSecOps Intern</div>
-                <ul>
-                    <li>Implemented a resilient, high-availability Kubernetes cluster</li>
-                    <li>Architected a secure Nexus artifact repository for Docker images and build artifacts</li>
-                    <li>Developed and maintained advanced Jenkins multibranch pipelines</li>
-                    <li>Streamlined version control workflows by optimizing GitLab operations</li>
-                    <li>Automated critical processes with custom Bash scripts and fine-tuned iptables rules</li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="projects">
-            <h2 class="reveal-on-scroll">Projects</h2>
-            <div class="card reveal-on-scroll" data-tags="python data-science">
-                <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">
-                    <div class="card-title">Morrisseau Cleaner</div>
-                </a>
-                <ul>
-                    <li>Developed a Python library for automated data cleaning and preprocessing, reducing manual data preparation time by 80%</li>
-                    <li>Implemented robust data validation techniques, improving dataset accuracy and integrity</li>
-                </ul>
-            </div>
-            <div class="card reveal-on-scroll" data-tags="python selenium automation">
-                <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">
-                    <div class="card-title">Movati-Reserver</div>
-                </a>
-                <ul>
-                    <li>Created an automated Python script using Selenium to streamline Movati fitness class reservations</li>
-                    <li>Enhanced the user experience by exposing hard-to-find classes not listed through the standard UI</li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="technical-skills">
-            <h2 class="reveal-on-scroll">Technical Skills</h2>
-            <p class="reveal-on-scroll" style="color: var(--color-text-secondary); margin-top: -0.5rem;">Click a skill to filter projects and experience below.</p>
-            <div class="skills-container reveal-on-scroll">
-                <div class="skills-category">
-                    <h3>Programming Languages</h3>
-                    <ul>
-                        <li class="skill-tag">Python</li><li class="skill-tag">C++</li><li class="skill-tag">C</li><li class="skill-tag">MicroPython</li><li class="skill-tag">Rust</li><li class="skill-tag">Java</li><li class="skill-tag">Groovy</li><li class="skill-tag">JavaScript</li><li class="skill-tag">SQL</li>
-                    </ul>
-                </div>
-                <div class="skills-category">
-                    <h3>Technologies & Tools</h3>
-                    <ul>
-                        <li class="skill-tag">Docker</li><li class="skill-tag">Kubernetes</li><li class="skill-tag">Jenkins</li><li class="skill-tag">Node.js</li><li class="skill-tag">Nexus</li><li class="skill-tag">Checkmarx</li><li class="skill-tag">Burp Suite</li><li class="skill-tag">GitLab</li><li class="skill-tag">Selenium</li>
-                    </ul>
-                </div>
-                <div class="skills-category">
-                    <h3>Development Practices</h3>
-                    <ul>
-                        <li class="skill-tag">Object-Oriented Design</li><li class="skill-tag">Algorithm Design</li><li class="skill-tag">Agile</li><li class="skill-tag">SAST</li><li class="skill-tag">DAST</li><li class="skill-tag">DevSecOps</li>
-                    </ul>
-                </div>
-                <div class="skills-category">
-                    <h3>Platforms & Systems</h3>
-                    <ul>
-                        <li class="skill-tag">Linux/Ubuntu</li><li class="skill-tag">Virtualization</li><li class="skill-tag">Bash</li><li class="skill-tag">IoT</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-        
-        <section id="advanced-modules">
-            <h2 class="reveal-on-scroll">Interactive Modules</h2>
-            
-            <div id="wasm-runner" class="card advanced-module reveal-on-scroll">
-                <h3>C in the Browser (WebAssembly)</h3>
-                <p>Run compiled C code directly in this module. (Coming Soon)</p>
-                </div>
-            
-            <div id="crypto-playground" class="card advanced-module reveal-on-scroll">
-                <h3>Cryptography Playground</h3>
-                <p>An interactive tool to visualize classic encryption algorithms. (Coming Soon)</p>
-                </div>
-
-            <div id="memory-visualizer" class="card advanced-module reveal-on-scroll">
-                <h3>Memory Allocation Visualizer</h3>
-                <p>A simulation of heap memory management (malloc/free). (Coming Soon)</p>
-                </div>
-        </section>
-
-    </main>
-    
-    <div id="terminal" class="terminal-window">
-        <div id="terminal-output">
-            <div>Welcome to Ali Shajari's interactive terminal.</div>
-            <div>Type 'help' to see available commands.</div>
-        </div>
-        <div class="terminal-prompt">
-            <span class="terminal-user">guest@ali.dev:~$</span>
-            <input type="text" id="terminal-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2025 Ali Shajari. All rights reserved.</p>
-    </footer>
-
-    <script src="script.js"></script>
-
-</body>
-</html>
+});
