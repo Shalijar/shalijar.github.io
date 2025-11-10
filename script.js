@@ -33,12 +33,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const filterableCards = document.querySelectorAll('.card[data-tags]');
     let activeFilters = [];
 
+    // Safety check: Only run this code if the skills container exists
     if (skillsContainer && filterableCards.length > 0) {
         skillsContainer.addEventListener('click', (e) => {
             if (e.target.classList.contains('skill-tag')) {
                 const tag = e.target;
                 const filter = tag.textContent.toLowerCase();
 
+                // Toggle the filter in the activeFilters array
                 tag.classList.toggle('active');
                 if (activeFilters.includes(filter)) {
                     activeFilters = activeFilters.filter(f => f !== filter);
@@ -54,11 +56,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     function runFilter() {
         filterableCards.forEach(card => {
             const cardTags = card.dataset.tags.split(' ');
+            
+            // If no filters are active, show all cards
             if (activeFilters.length === 0) {
                 card.classList.remove('is-hidden');
                 return;
             }
+
+            // Check if every active filter is present in the card's tags
             const matches = activeFilters.every(filter => cardTags.includes(filter));
+
             if (matches) {
                 card.classList.remove('is-hidden');
             } else {
@@ -70,6 +77,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     /* === FEATURE 4: INTERACTIVE TERMINAL (NEW) === */
     const terminal = document.getElementById('terminal');
+    
+    // Safety check: Only run terminal code if the terminal element exists
     if (terminal) {
         const terminalToggle = document.getElementById('terminal-toggle');
         const terminalOutput = document.getElementById('terminal-output');
@@ -78,6 +87,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const terminalHistory = [];
         let historyIndex = -1;
 
+        // --- Terminal Toggle ---
         function toggleTerminal(forceOpen = false) {
             if (forceOpen) {
                 terminal.classList.add('is-open');
@@ -94,6 +104,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         terminalToggle.addEventListener('click', () => toggleTerminal());
         
+        // Global key listener for Ctrl + `
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.key === '`') {
                 e.preventDefault();
@@ -101,14 +112,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         });
 
+        // --- Terminal Input Handling ---
         terminalInput.addEventListener('keydown', (e) => {
             switch (e.key) {
                 case 'Enter':
                     const commandText = terminalInput.value.trim();
                     if (commandText) {
+                        // Echo command
                         printToTerminal(`> ${commandText}`, 'terminal-command');
+                        
+                        // Save to history
                         terminalHistory.unshift(commandText);
-                        historyIndex = -1;
+                        historyIndex = -1; // Reset history index
+
                         parseCommand(commandText);
                     }
                     terminalInput.value = '';
@@ -136,10 +152,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         });
 
+        // Click on terminal focuses input
         terminal.addEventListener('click', () => {
             terminalInput.focus();
         });
 
+        // --- Command Parser ---
         function parseCommand(command) {
             const parts = command.toLowerCase().split(' ');
             const cmd = parts[0];
@@ -158,28 +176,35 @@ document.addEventListener('DOMContentLoaded', (event) => {
   clear         - Clears the terminal output`
                     );
                     break;
+                
                 case 'ls':
                     printToTerminal('education/\nexperience/\nprojects/\nskills/');
                     break;
+                
                 case 'cat':
                     handleCatCommand(args.join(' '));
                     break;
+                    
                 case 'contact':
                     printToTerminal('ali0shajari@gmail.com');
                     break;
+
                 case 'social':
                     printToTerminal(
 `LinkedIn: https://www.linkedin.com/in/ali-shajari
 GitHub:   https://github.com/Shalijar`
                     );
                     break;
+
                 case 'skills':
                     const skills = Array.from(document.querySelectorAll('.skill-tag')).map(s => s.textContent).join(', ');
                     printToTerminal(skills);
                     break;
+
                 case 'clear':
                     terminalOutput.innerHTML = '';
                     break;
+
                 default:
                     printToTerminal(`bash: command not found: ${command}`, 'terminal-error');
             }
@@ -190,6 +215,7 @@ GitHub:   https://github.com/Shalijar`
                 printToTerminal('cat: missing operand', 'terminal-error');
                 return;
             }
+            
             let content = '';
             switch(path) {
                 case 'experience/cognitive':
@@ -226,18 +252,27 @@ GitHub:   https://github.com/Shalijar`
             printToTerminal(content);
         }
 
+        // --- Terminal Print Helper ---
         function printToTerminal(text, className = 'terminal-response') {
             const div = document.createElement('div');
             div.textContent = text;
             div.className = className;
             terminalOutput.appendChild(div);
+            // Auto-scroll to bottom
             terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+
+        // Focus input on load
+        if (terminal.classList.contains('is-open')) {
+            terminalInput.focus();
         }
     } // End if(terminal)
 
 
     /* === FEATURE 5: CRYPTOGRAPHY PLAYGROUND (NEW) === */
     const cryptoModule = document.getElementById('crypto-playground');
+    
+    // Safety check: Only run if the crypto module exists
     if (cryptoModule) {
         const input = document.getElementById('crypto-input');
         const output = document.getElementById('crypto-output');
@@ -254,13 +289,13 @@ GitHub:   https://github.com/Shalijar`
             return text.split('').map(char => {
                 const code = char.charCodeAt(0);
 
-                // Uppercase letters
+                // Uppercase letters (A=65, Z=90)
                 if (code >= 65 && code <= 90) {
                     let shiftedCode = ((code - 65 + shift) % 26);
                     if (shiftedCode < 0) shiftedCode += 26; // Handle negative shift
                     return String.fromCharCode(shiftedCode + 65);
                 }
-                // Lowercase letters
+                // Lowercase letters (a=97, z=122)
                 else if (code >= 97 && code <= 122) {
                     let shiftedCode = ((code - 97 + shift) % 26);
                     if (shiftedCode < 0) shiftedCode += 26; // Handle negative shift
@@ -302,6 +337,6 @@ GitHub:   https://github.com/Shalijar`
 
         // Initial run
         updateCrypto();
-    }
+    } // End if(cryptoModule)
 
 });
