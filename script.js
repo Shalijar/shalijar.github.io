@@ -304,7 +304,7 @@ GitHub:   https://github.com/Shalijar`
                 // Other characters (unchanged)
                 else {
                     return char;
-.                }
+                }
             }).join('');
         }
 
