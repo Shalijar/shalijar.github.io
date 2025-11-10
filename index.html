@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ali Shajari - Portfolio</title>
     <style>
+        /* Basic Setup */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             margin: 0 auto;
@@ -12,7 +13,24 @@
             max-width: 800px;
             line-height: 1.6;
             color: #333;
+            background-color: #ffffff;
+            transition: background-color 0.3s, color 0.3s;
         }
+        
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3 {
+            border-bottom-color: #444;
+        }
+        body.dark-mode .job {
+            background-color: #1e1e1e;
+            border-color: #333;
+        }
+
+        /* Headings */
         h1, h2, h3 {
             border-bottom: 2px solid #eee;
             padding-bottom: 5px;
@@ -23,6 +41,8 @@
             border-bottom: none;
             text-align: center;
         }
+
+        /* Contact Info */
         .contact-info {
             text-align: center;
             list-style: none;
@@ -33,16 +53,40 @@
             display: inline-block;
             margin: 0 10px;
         }
+        
+        /* Links */
         a {
             color: #007bff;
             text-decoration: none;
+            transition: color 0.2s;
         }
         a:hover {
+            color: #0056b3;
             text-decoration: underline;
         }
+        body.dark-mode a {
+            color: #4dabf7;
+        }
+        body.dark-mode a:hover {
+            color: #a5d8ff;
+        }
+
+        /* === DYNAMIC CARD STYLES === */
         .job {
             margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+            /* This is the transition */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+        /* This is the hover effect */
+        .job:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
         .job-title {
             font-size: 1.2rem;
             font-weight: bold;
@@ -57,14 +101,70 @@
         }
         ul {
             padding-left: 20px;
+            margin-top: 0.5rem;
         }
+
+        /* Skills */
         .skills-container {
             display: flex;
             flex-wrap: wrap;
         }
         .skills-category {
             width: 50%;
+            padding-right: 1rem;
         }
+
+        /* Dark Mode Toggle */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 50px;
+        }
+        .theme-switch input {
+            display:none;
+        }
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+        }
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 16px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 16px;
+        }
+        input:checked + .slider {
+            background-color: #007bff;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .slider.round {
+            border-radius: 34px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+
+        /* Responsive */
         @media (max-width: 600px) {
             .skills-category {
                 width: 100%;
@@ -75,154 +175,187 @@
 <body>
 
     <header>
-        <h1>Ali Shajari [cite: 1]</h1>
+        <h1>Ali Shajari</h1>
         <ul class="contact-info">
-            <li>613-250-2423 [cite: 2]</li>
+            <li>613-250-2423</li>
             <li>|</li>
-            <li><a href="mailto:alishajari@gmail.com">alishajari@gmail.com</a> [cite: 2]</li>
+            <li><a href="mailto:ali0shajari@gmail.com">ali0shajari@gmail.com</a></li>
             <li>|</li>
-            <li><a href="https://www.linkedin.com/in/your-linkedin">LinkedIn</a> [cite: 2]</li>
+            <li><a href="https://www.linkedin.com/in/ali-shajari">LinkedIn</a></li>
             <li>|</li>
-            <li><a href="https://github.com/Shalijar">GitHub</a> [cite: 2]</li>
+            <li><a href="https://github.com/Shalijar">GitHub</a></li>
         </ul>
     </header>
 
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+        </label>
+    </div>
+
     <main>
         <section id="education">
-            <h2>Education [cite: 3]</h2>
+            <h2>Education</h2>
             <div class="job">
                 <div class="job-header">
-                    <span class="job-company">York University [cite: 4]</span>
-                    <span class="job-date">Sep. 2024-Present [cite: 12]</span>
+                    <span class="job-company">York University</span>
+                    <span class="job-date">Sep. 2024-Present</span>
                 </div>
-                <div class="job-title">Bachelor of Arts in Computer Security [cite: 5]</div>
+                <div class="job-title">Bachelor of Arts in Computer Security</div>
             </div>
             <div class="job">
                 <div class="job-header">
-                    <span class="job-company">Carleton University [cite: 6]</span>
-                    <span class="job-date">Sep. 2023-May 2024 [cite: 14]</span>
+                    <span class="job-company">Carleton University</span>
+                    <span class="job-date">Sep. 2023-May 2024</span>
                 </div>
-                <div class="job-title">Bachelor of Science in Computer Science [cite: 7]</div>
+                <div class="job-title">Bachelor of Science in Computer Science</div>
             </div>
         </section>
 
         <section id="experience">
-            <h2>Experience [cite: 8]</h2>
+            <h2>Experience</h2>
             <div class="job">
                 <div class="job-header">
-                    <span class="job-company">Cognitive Systems [cite: 10]</span>
-                    <span class="job-date">May 2025-Present [cite: 15]</span>
+                    <span class="job-company">Cognitive Systems</span>
+                    <span class="job-date">May 2025-Present</span>
                 </div>
-                <div class="job-title">Data Science Co-op [cite: 9]</div>
+                <div class="job-title">Data Science Co-op</div>
                 <ul>
-                    <li>Programmed microboards using C and MicroPython, creating efficient and reliable firmware for data collection and processing [cite: 16]</li>
-                    <li>Developed comprehensive test suites for microboard firmware, ensuring functionality and robustness under various operational conditions [cite: 16]</li>
+                    <li>Programmed microboards using C and MicroPython, creating efficient and reliable firmware for data collection and processing</li>
+                    <li>Developed comprehensive test suites for microboard firmware, ensuring functionality and robustness under various operational conditions</li>
                 </ul>
             </div>
 
             <div class="job">
                 <div class="job-header">
-                    <span class="job-company">Carleton University - Carleton Internet Security Lab Volunteer [cite: 17]</span>
-                    <span class="job-date">Sep. 2023 - May 2024 [cite: 18]</span>
+                    <span class="job-company">Carleton University - Carleton Internet Security Lab Volunteer</span>
+                    <span class="job-date">Sep. 2023 - May 2024</span>
                 </div>
-                <div class="job-title">Research Assistant [cite: 16]</div>
+                <div class="job-title">Research Assistant</div>
                 <ul>
-                    <li>Researched IoT longevity and its security implications under Professor David Barrera, focusing on identifying potential vulnerabilities in long-term deployments [cite: 18]</li>
-                    <li>Implemented a universal access policy for home-based IoT devices, increasing security while eliminating the need for additional hardware resources [cite: 18, 19]</li>
+                    <li>Researched IoT longevity and its security implications under Professor David Barrera, focusing on identifying potential vulnerabilities in long-term deployments</li>
+                    <li>Implemented a universal access policy for home-based IoT devices, increasing security while eliminating the need for additional hardware resources</li>
                 </ul>
             </div>
 
             <div class="job">
                 <div class="job-header">
-                    <span class="job-company">Carleton University - The Morrisseau Project [cite: 21]</span>
-                    <span class="job-date">Oct. 2023 - May 2024 [cite: 22]</span>
+                    <span class="job-company">Carleton University - The Morrisseau Project</span>
+                    <span class="job-date">Oct. 2023 - May 2024</span>
                 </div>
-                <div class="job-title">Research Assistant [cite: 20]</div>
+                <div class="job-title">Research Assistant</div>
                 <ul>
-                    <li>Developed an automation script to clean and format data, reducing the time spent on this process from 1 year to 3 months [cite: 22]</li>
-                    <li>Led a comprehensive software review to identify and address security vulnerabilities, including XSS, IDOR, and unauthorized access [cite: 23]</li>
-                    <li>Assisted in maintaining project infrastructure and documentation [cite: 25]</li>
+                    <li>Developed an automation script to clean and format data, reducing the time spent on this process from 1 year to 3 months</li>
+                    <li>Led a comprehensive software review to identify and address security vulnerabilities, including XSS, IDOR, and unauthorized access</li>
+                    <li>Assisted in maintaining project infrastructure and documentation</li>
                 </ul>
             </div>
             
             <div class="job">
                 <div class="job-header">
-                    <span class="job-company">Carleton University [cite: 27]</span>
-                    <span class="job-date">Oct. 2023-Dec. 2023 [cite: 28]</span>
+                    <span class="job-company">Carleton University</span>
+                    <span class="job-date">Oct. 2023-Dec. 2023</span>
                 </div>
-                <div class="job-title">Student as Partners Program [cite: 26]</div>
+                <div class="job-title">Student as Partners Program</div>
                 <ul>
-                    <li>Created an interactive and educational Jupyter notebook for 4th-year data science students [cite: 29]</li>
-                    <li>Designed custom datasets tailored to practical scenarios for data cleaning, integration, visualization, and analysis [cite: 30]</li>
-                    <li>Developed practice exercises and projects to reinforce key skills [cite: 31]</li>
+                    <li>Created an interactive and educational Jupyter notebook for 4th-year data science students</li>
+                    <li>Designed custom datasets tailored to practical scenarios for data cleaning, integration, visualization, and analysis</li>
+                    <li>Developed practice exercises and projects to reinforce key skills</li>
                 </ul>
             </div>
 
             <div class="job">
                 <div class="job-header">
-                    <span class="job-company">Dotin (Core Banking) [cite: 33]</span>
-                    <span class="job-date">Jul. 2022-Dec. 2022 [cite: 38]</span>
+                    <span class="job-company">Dotin (Core Banking)</span>
+                    <span class="job-date">Jul. 2022-Dec. 2022</span>
                 </div>
-                <div class="job-title">DevSecOps Intern [cite: 32]</div>
+                <div class="job-title">DevSecOps Intern</div>
                 <ul>
-                    <li>Implemented a resilient, high-availability Kubernetes cluster [cite: 34]</li>
-                    <li>Architected a secure Nexus artifact repository for Docker images and build artifacts [cite: 35]</li>
-                    <li>Developed and maintained advanced Jenkins multibranch pipelines [cite: 35]</li>
-                    <li>Streamlined version control workflows by optimizing GitLab operations [cite: 35]</li>
-                    <li>Automated critical processes with custom Bash scripts and fine-tuned iptables rules [cite: 35]</li>
+                    <li>Implemented a resilient, high-availability Kubernetes cluster</li>
+                    <li>Architected a secure Nexus artifact repository for Docker images and build artifacts</li>
+                    <li>Developed and maintained advanced Jenkins multibranch pipelines</li>
+                    <li>Streamlined version control workflows by optimizing GitLab operations</li>
+                    <li>Automated critical processes with custom Bash scripts and fine-tuned iptables rules</li>
                 </ul>
             </div>
         </section>
 
         <section id="projects">
-            <h2>Projects [cite: 36]</h2>
+            <h2>Projects</h2>
             <div class="job">
-                <div class="job-title">Morrisseau Cleaner (Link) [cite: 37]</div>
+                <div class="job-title">Morrisseau Cleaner (Link)</div>
                 <ul>
-                    <li>Developed a Python library for automated data cleaning and preprocessing, reducing manual data preparation time by 80% [cite: 39]</li>
-                    <li>Implemented robust data validation techniques, improving dataset accuracy and integrity [cite: 39]</li>
+                    <li>Developed a Python library for automated data cleaning and preprocessing, reducing manual data preparation time by 80%</li>
+                    <li>Implemented robust data validation techniques, improving dataset accuracy and integrity</li>
                 </ul>
             </div>
             <div class="job">
-                <div class="job-title">Movati-Reserver (Link) [cite: 40]</div>
+                <div class="job-title">Movati-Reserver (Link)</div>
                 <ul>
-                    <li>Created an automated Python script using Selenium to streamline Movati fitness class reservations [cite: 41]</li>
-                    <li>Enhanced the user experience by exposing hard-to-find classes not listed through the standard UI [cite: 41]</li>
+                    <li>Created an automated Python script using Selenium to streamline Movati fitness class reservations</li>
+                    <li>Enhanced the user experience by exposing hard-to-find classes not listed through the standard UI</li>
                 </ul>
             </div>
         </section>
 
         <section id="technical-skills">
-            <h2>Technical Skills [cite: 42]</h2>
+            <h2>Technical Skills</h2>
             <div class="skills-container">
                 <div class="skills-category">
-                    <h3>Programming Languages [cite: 43]</h3>
+                    <h3>Programming Languages</h3>
                     <ul>
-                        <li>Python, C++, C, MicroPython, Rust, Java, Groovy, JavaScript, SQL [cite: 43]</li>
+                        <li>Python, C++, C, MicroPython, Rust, Java, Groovy, JavaScript, SQL</li>
                     </ul>
                 </div>
                 <div class="skills-category">
-                    <h3>Technologies & Tools [cite: 44]</h3>
+                    <h3>Technologies & Tools</h3>
                     <ul>
-                        <li>Docker, Kubernetes, Jenkins, Node.js, Nexus, Checkmarx, Burp Suite [cite: 44]</li>
+                        <li>Docker, Kubernetes, Jenkins, Node.js, Nexus, Checkmarx, Burp Suite</li>
                     </ul>
                 </div>
                 <div class="skills-category">
-                    <h3>Development Practices [cite: 46]</h3>
+                    <h3>Development Practices</h3>
                     <ul>
-                        <li>Object-Oriented Design, Algorithm Design, Agile, SAST, DAST [cite: 46]</li>
+                        <li>Object-Oriented Design, Algorithm Design, Agile, SAST, DAST</li>
                     </ul>
                 </div>
                 <div class="skills-category">
-                    <h3>Platforms & Systems [cite: 47]</h3>
+                    <h3>Platforms & Systems</h3>
                     <ul>
-                        <li>Linux/Ubuntu, Virtualization [cite: 47]</li>
+                        <li>Linux/Ubuntu, Virtualization</li>
                     </ul>
                 </div>
             </div>
         </section>
 
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const toggleSwitch = document.querySelector('#checkbox');
+            // Check for saved theme in local storage
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme) {
+                document.body.classList.add(currentTheme);
+                if (currentTheme === 'dark-mode') {
+                    toggleSwitch.checked = true;
+                }
+            }
+
+            // Add listener for the toggle
+            toggleSwitch.addEventListener('change', function() {
+                if(this.checked) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark-mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light-mode');
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
