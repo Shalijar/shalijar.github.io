@@ -5,16 +5,224 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ali Shajari - Portfolio</title>
     <style>
-        body { 
+        body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            margin: 2rem; 
+            margin: 0 auto;
+            padding: 2rem;
+            max-width: 800px;
             line-height: 1.6;
+            color: #333;
         }
-        h1 { color: #333; }
+        h1, h2, h3 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 2.5rem;
+        }
+        h1 {
+            margin-top: 0;
+            border-bottom: none;
+            text-align: center;
+        }
+        .contact-info {
+            text-align: center;
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+        .contact-info li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .job {
+            margin-bottom: 1.5rem;
+        }
+        .job-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .job-company {
+            font-weight: bold;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .skills-category {
+            width: 50%;
+        }
+        @media (max-width: 600px) {
+            .skills-category {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Ali Shajari's Portfolio</h1>
-    <p>Welcome to my professional portfolio. Site under construction.</p>
+
+    <header>
+        <h1>Ali Shajari [cite: 1]</h1>
+        <ul class="contact-info">
+            <li>613-250-2423 [cite: 2]</li>
+            <li>|</li>
+            <li><a href="mailto:alishajari@gmail.com">alishajari@gmail.com</a> [cite: 2]</li>
+            <li>|</li>
+            <li><a href="https://www.linkedin.com/in/your-linkedin">LinkedIn</a> [cite: 2]</li>
+            <li>|</li>
+            <li><a href="https://github.com/Shalijar">GitHub</a> [cite: 2]</li>
+        </ul>
+    </header>
+
+    <main>
+        <section id="education">
+            <h2>Education [cite: 3]</h2>
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-company">York University [cite: 4]</span>
+                    <span class="job-date">Sep. 2024-Present [cite: 12]</span>
+                </div>
+                <div class="job-title">Bachelor of Arts in Computer Security [cite: 5]</div>
+            </div>
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-company">Carleton University [cite: 6]</span>
+                    <span class="job-date">Sep. 2023-May 2024 [cite: 14]</span>
+                </div>
+                <div class="job-title">Bachelor of Science in Computer Science [cite: 7]</div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2>Experience [cite: 8]</h2>
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-company">Cognitive Systems [cite: 10]</span>
+                    <span class="job-date">May 2025-Present [cite: 15]</span>
+                </div>
+                <div class="job-title">Data Science Co-op [cite: 9]</div>
+                <ul>
+                    <li>Programmed microboards using C and MicroPython, creating efficient and reliable firmware for data collection and processing [cite: 16]</li>
+                    <li>Developed comprehensive test suites for microboard firmware, ensuring functionality and robustness under various operational conditions [cite: 16]</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-company">Carleton University - Carleton Internet Security Lab Volunteer [cite: 17]</span>
+                    <span class="job-date">Sep. 2023 - May 2024 [cite: 18]</span>
+                </div>
+                <div class="job-title">Research Assistant [cite: 16]</div>
+                <ul>
+                    <li>Researched IoT longevity and its security implications under Professor David Barrera, focusing on identifying potential vulnerabilities in long-term deployments [cite: 18]</li>
+                    <li>Implemented a universal access policy for home-based IoT devices, increasing security while eliminating the need for additional hardware resources [cite: 18, 19]</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-company">Carleton University - The Morrisseau Project [cite: 21]</span>
+                    <span class="job-date">Oct. 2023 - May 2024 [cite: 22]</span>
+                </div>
+                <div class="job-title">Research Assistant [cite: 20]</div>
+                <ul>
+                    <li>Developed an automation script to clean and format data, reducing the time spent on this process from 1 year to 3 months [cite: 22]</li>
+                    <li>Led a comprehensive software review to identify and address security vulnerabilities, including XSS, IDOR, and unauthorized access [cite: 23]</li>
+                    <li>Assisted in maintaining project infrastructure and documentation [cite: 25]</li>
+                </ul>
+            </div>
+            
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-company">Carleton University [cite: 27]</span>
+                    <span class="job-date">Oct. 2023-Dec. 2023 [cite: 28]</span>
+                </div>
+                <div class="job-title">Student as Partners Program [cite: 26]</div>
+                <ul>
+                    <li>Created an interactive and educational Jupyter notebook for 4th-year data science students [cite: 29]</li>
+                    <li>Designed custom datasets tailored to practical scenarios for data cleaning, integration, visualization, and analysis [cite: 30]</li>
+                    <li>Developed practice exercises and projects to reinforce key skills [cite: 31]</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-company">Dotin (Core Banking) [cite: 33]</span>
+                    <span class="job-date">Jul. 2022-Dec. 2022 [cite: 38]</span>
+                </div>
+                <div class="job-title">DevSecOps Intern [cite: 32]</div>
+                <ul>
+                    <li>Implemented a resilient, high-availability Kubernetes cluster [cite: 34]</li>
+                    <li>Architected a secure Nexus artifact repository for Docker images and build artifacts [cite: 35]</li>
+                    <li>Developed and maintained advanced Jenkins multibranch pipelines [cite: 35]</li>
+                    <li>Streamlined version control workflows by optimizing GitLab operations [cite: 35]</li>
+                    <li>Automated critical processes with custom Bash scripts and fine-tuned iptables rules [cite: 35]</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Projects [cite: 36]</h2>
+            <div class="job">
+                <div class="job-title">Morrisseau Cleaner (Link) [cite: 37]</div>
+                <ul>
+                    <li>Developed a Python library for automated data cleaning and preprocessing, reducing manual data preparation time by 80% [cite: 39]</li>
+                    <li>Implemented robust data validation techniques, improving dataset accuracy and integrity [cite: 39]</li>
+                </ul>
+            </div>
+            <div class="job">
+                <div class="job-title">Movati-Reserver (Link) [cite: 40]</div>
+                <ul>
+                    <li>Created an automated Python script using Selenium to streamline Movati fitness class reservations [cite: 41]</li>
+                    <li>Enhanced the user experience by exposing hard-to-find classes not listed through the standard UI [cite: 41]</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="technical-skills">
+            <h2>Technical Skills [cite: 42]</h2>
+            <div class="skills-container">
+                <div class="skills-category">
+                    <h3>Programming Languages [cite: 43]</h3>
+                    <ul>
+                        <li>Python, C++, C, MicroPython, Rust, Java, Groovy, JavaScript, SQL [cite: 43]</li>
+                    </ul>
+                </div>
+                <div class="skills-category">
+                    <h3>Technologies & Tools [cite: 44]</h3>
+                    <ul>
+                        <li>Docker, Kubernetes, Jenkins, Node.js, Nexus, Checkmarx, Burp Suite [cite: 44]</li>
+                    </ul>
+                </div>
+                <div class="skills-category">
+                    <h3>Development Practices [cite: 46]</h3>
+                    <ul>
+                        <li>Object-Oriented Design, Algorithm Design, Agile, SAST, DAST [cite: 46]</li>
+                    </ul>
+                </div>
+                <div class="skills-category">
+                    <h3>Platforms & Systems [cite: 47]</h3>
+                    <ul>
+                        <li>Linux/Ubuntu, Virtualization [cite: 47]</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
 </body>
 </html>
