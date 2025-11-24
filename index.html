@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ali Shajari - Portfolio</title>
+    <meta name="robots" content="noindex, nofollow"> <title>Ali Shajari - Portfolio</title>
     
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -19,6 +19,7 @@
 
     <header>
         <h1>Ali Shajari</h1>
+        <p class="tagline">Bridging "The Metal" and "The Market"</p>
         <nav class="contact-info">
             <ul>
                 <li><a href="mailto:ali0shajari@gmail.com">ali0shajari@gmail.com</a></li>
@@ -37,6 +38,14 @@
     </header>
 
     <main>
+        <section id="about">
+            <h2 class="reveal-on-scroll">About Me</h2>
+            <div class="card reveal-on-scroll">
+                <p>I view the world through the lens of leverage and optimization. Currently, I am a <strong>Computer Security student at York University</strong> with a distinct background operating at both ends of the technical spectrum.</p> 
+                <p>I possess the technical depth to develop firmware for embedded systems (specifically ESP32 microcontrollers) and the high-level analytical skills to derive insights as a Data Scientist. I don’t just write code; I engineer systems that create value. My philosophy is simple: in a digital economy, the person who secures the infrastructure—who possesses "root access" to the environment—holds the most equity.</p>
+            </div>
+        </section>
+
         <section id="education">
             <h2 class="reveal-on-scroll">Education</h2>
             <div class="card reveal-on-scroll" data-tags="education">
@@ -57,15 +66,18 @@
 
         <section id="experience">
             <h2 class="reveal-on-scroll">Experience</h2>
-            <div class="card reveal-on-scroll" data-tags="c micropython data-science python">
+            
+            <div class="card reveal-on-scroll" data-tags="c micropython data-science python ci-cd esp32">
                 <div class="card-header">
                     <span class="card-company">Cognitive Systems</span>
                     <span class="card-date">May 2025-Present</span>
                 </div>
                 <div class="card-title">Data Science Co-op</div>
                 <ul>
-                    <li>Programmed microboards using C and MicroPython, creating efficient and reliable firmware for data collection and processing</li>
-                    <li>Developed comprehensive test suites for microboard firmware, ensuring functionality and robustness under various operational conditions</li>
+                    <li>Developed and maintained Python automation scripts (<code>accuracy_analyzer.py</code>) using pandas and pytest to streamline data reporting.</li>
+                    <li>Bridged the gap between hardware and software by flashing and debugging firmware for <strong>ESP32-C6 microcontrollers</strong>, analyzing serial telemetry to resolve connectivity issues.</li>
+                    <li>Integrated comprehensive test suites into <strong>TeamCity CI/CD pipelines</strong>, ensuring robust deployment cycles.</li>
+                    <li>Collaborated in an Agile environment to translate technical findings into actionable insights for cross-functional teams.</li>
                 </ul>
             </div>
 
@@ -76,8 +88,8 @@
                 </div>
                 <div class="card-title">Research Assistant</div>
                 <ul>
-                    <li>Researched IoT longevity and its security implications under Professor David Barrera, focusing on identifying potential vulnerabilities in long-term deployments</li>
-                    <li>Implemented a universal access policy for home-based IoT devices, increasing security while eliminating the need for additional hardware resources</li>
+                    <li>Researched IoT longevity and its security implications under Professor David Barrera, focusing on identifying potential vulnerabilities in long-term deployments.</li>
+                    <li>Implemented a universal access policy for home-based IoT devices, increasing security while eliminating the need for additional hardware resources.</li>
                 </ul>
             </div>
 
@@ -88,9 +100,9 @@
                 </div>
                 <div class="card-title">Research Assistant</div>
                 <ul>
-                    <li>Developed an automation script to clean and format data, reducing the time spent on this process from 1 year to 3 months</li>
-                    <li>Led a comprehensive software review to identify and address security vulnerabilities, including XSS, IDOR, and unauthorized access</li>
-                    <li>Assisted in maintaining project infrastructure and documentation</li>
+                    <li>Developed an automation script to clean and format data, reducing the time spent on this process from 1 year to 3 months.</li>
+                    <li>Led a comprehensive software review to identify and address security vulnerabilities, including XSS, IDOR, and unauthorized access.</li>
+                    <li>Assisted in maintaining project infrastructure and documentation.</li>
                 </ul>
             </div>
             
@@ -101,9 +113,9 @@
                 </div>
                 <div class="card-title">Student as Partners Program</div>
                 <ul>
-                    <li>Created an interactive and educational Jupyter notebook for 4th-year data science students</li>
-                    <li>Designed custom datasets tailored to practical scenarios for data cleaning, integration, visualization, and analysis</li>
-                    <li>Developed practice exercises and projects to reinforce key skills</li>
+                    <li>Created an interactive and educational Jupyter notebook for 4th-year data science students.</li>
+                    <li>Designed custom datasets tailored to practical scenarios for data cleaning, integration, visualization, and analysis.</li>
+                    <li>Developed practice exercises and projects to reinforce key skills.</li>
                 </ul>
             </div>
 
@@ -114,11 +126,11 @@
                 </div>
                 <div class="card-title">DevSecOps Intern</div>
                 <ul>
-                    <li>Implemented a resilient, high-availability Kubernetes cluster</li>
-                    <li>Architected a secure Nexus artifact repository for Docker images and build artifacts</li>
-                    <li>Developed and maintained advanced Jenkins multibranch pipelines</li>
-                    <li>Streamlined version control workflows by optimizing GitLab operations</li>
-                    <li>Automated critical processes with custom Bash scripts and fine-tuned iptables rules</li>
+                    <li>Implemented a resilient, high-availability Kubernetes cluster.</li>
+                    <li>Architected a secure Nexus artifact repository for Docker images and build artifacts.</li>
+                    <li>Developed and maintained advanced Jenkins multibranch pipelines.</li>
+                    <li>Streamlined version control workflows by optimizing GitLab operations.</li>
+                    <li>Automated critical processes with custom Bash scripts and fine-tuned iptables rules.</li>
                 </ul>
             </div>
         </section>
@@ -130,8 +142,8 @@
                     <div class="card-title">Morrisseau Cleaner</div>
                 </a>
                 <ul>
-                    <li>Developed a Python library for automated data cleaning and preprocessing, reducing manual data preparation time by 80%</li>
-                    <li>Implemented robust data validation techniques, improving dataset accuracy and integrity</li>
+                    <li>Developed a Python library for automated data cleaning and preprocessing, reducing manual data preparation time by 80%.</li>
+                    <li>Implemented robust data validation techniques, improving dataset accuracy and integrity.</li>
                 </ul>
             </div>
             <div class="card reveal-on-scroll" data-tags="python selenium automation">
@@ -139,8 +151,8 @@
                     <div class="card-title">Movati-Reserver</div>
                 </a>
                 <ul>
-                    <li>Created an automated Python script using Selenium to streamline Movati fitness class reservations</li>
-                    <li>Enhanced the user experience by exposing hard-to-find classes not listed through the standard UI</li>
+                    <li>Created an automated Python script using Selenium to streamline Movati fitness class reservations.</li>
+                    <li>Enhanced the user experience by exposing hard-to-find classes not listed through the standard UI.</li>
                 </ul>
             </div>
         </section>
@@ -158,7 +170,7 @@
                 <div class="skills-category">
                     <h3>Technologies & Tools</h3>
                     <ul>
-                        <li class="skill-tag">Docker</li><li class="skill-tag">Kubernetes</li><li class="skill-tag">Jenkins</li><li class="skill-tag">Node.js</li><li class="skill-tag">Nexus</li><li class="skill-tag">Checkmarx</li><li class="skill-tag">Burp Suite</li><li class="skill-tag">GitLab</li><li class="skill-tag">Selenium</li>
+                        <li class="skill-tag">Docker</li><li class="skill-tag">Kubernetes</li><li class="skill-tag">Jenkins</li><li class="skill-tag">TeamCity</li><li class="skill-tag">Node.js</li><li class="skill-tag">Nexus</li><li class="skill-tag">Checkmarx</li><li class="skill-tag">Burp Suite</li><li class="skill-tag">GitLab</li><li class="skill-tag">Selenium</li>
                     </ul>
                 </div>
                 <div class="skills-category">
@@ -170,7 +182,7 @@
                 <div class="skills-category">
                     <h3>Platforms & Systems</h3>
                     <ul>
-                        <li class="skill-tag">Linux/Ubuntu</li><li class="skill-tag">Virtualization</li><li class="skill-tag">Bash</li><li class="skill-tag">IoT</li>
+                        <li class="skill-tag">Linux/Ubuntu</li><li class="skill-tag">Virtualization</li><li class="skill-tag">Bash</li><li class="skill-tag">IoT</li><li class="skill-tag">ESP32</li>
                     </ul>
                 </div>
             </div>

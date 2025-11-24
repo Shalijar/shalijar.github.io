@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     
-    /* === FEATURE 3: DYNAMIC SKILL FILTERING (NEW) === */
+    /* === FEATURE 3: DYNAMIC SKILL FILTERING === */
     const skillsContainer = document.querySelector('.skills-container');
     const filterableCards = document.querySelectorAll('.card[data-tags]');
     let activeFilters = [];
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 
 
-    /* === FEATURE 4: INTERACTIVE TERMINAL (NEW) === */
+    /* === FEATURE 4: INTERACTIVE TERMINAL === */
     const terminal = document.getElementById('terminal');
     
     // Safety check: Only run terminal code if the terminal element exists
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     break;
                 
                 case 'ls':
-                    printToTerminal('education/\nexperience/\nprojects/\nskills/');
+                    printToTerminal('about/\neducation/\nexperience/\nprojects/\nskills/');
                     break;
                 
                 case 'cat':
@@ -223,8 +223,9 @@ GitHub:   https://github.com/Shalijar`
 `[Company] Cognitive Systems
 [Role]    Data Science Co-op (May 2025-Present)
 [Tasks]
-- Programmed microboards using C and MicroPython.
-- Developed comprehensive test suites for microboard firmware.`;
+- Developed 'accuracy_analyzer.py' automation using pandas.
+- Flashed/debugged ESP32-C6 firmware for low-level data collection.
+- Integrated testing suites into TeamCity CI/CD pipelines.`;
                     break;
                 case 'experience/dotin':
                     content =
@@ -243,6 +244,13 @@ GitHub:   https://github.com/Shalijar`
 [Tasks]
 - Developed a Python library for automated data cleaning.
 - Implemented robust data validation, improving dataset accuracy.`;
+                    break;
+                case 'about':
+                    content =
+`[Bio]
+I view the world through the lens of leverage and optimization.
+I bridge the gap between "the metal" (embedded systems) and "the market" (data science).
+Goal: Secure the infrastructure to hold the most equity.`;
                     break;
                 default:
                     content = `cat: ${path}: No such file or directory`;
@@ -269,7 +277,7 @@ GitHub:   https://github.com/Shalijar`
     } // End if(terminal)
 
 
-    /* === FEATURE 5: CRYPTOGRAPHY PLAYGROUND (NEW) === */
+    /* === FEATURE 5: CRYPTOGRAPHY PLAYGROUND === */
     const cryptoModule = document.getElementById('crypto-playground');
     
     // Safety check: Only run if the crypto module exists
